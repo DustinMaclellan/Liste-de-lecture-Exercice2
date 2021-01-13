@@ -6,6 +6,7 @@ import PageModifier from './pages/PageModifier';
 import PageSupprimer from './pages/PageSupprimer';
 import Page404 from './pages/Page404';
 import PageDemandesSpeciales from './pages/PageDemandesSpeciales';
+import PageAccessibilite from './pages/PageAccessibilite';
 import BarreNavigation from './composants/BarreNavigation';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,6 +30,7 @@ function App() {
           <Route path="/modifier/:id" component={PageModifier} />
           <Route path="/supprimer/:id" component={PageSupprimer} />
           <Route path="/demandes-speciales" component={PageDemandesSpeciales} />
+          <Route path="/listes-demandes" component={PageAccessibilite} />
           <Route component={Page404} />
         </Switch>        
       </Container>
