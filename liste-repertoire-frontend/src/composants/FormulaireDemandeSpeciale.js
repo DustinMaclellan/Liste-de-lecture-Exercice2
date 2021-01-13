@@ -24,7 +24,7 @@ function FormulaireDemandeSpeciales()
 
     const envoyerFormulaire = async () => {
         await fetch(`/api/demandes-speciales/ajouter`, {
-            method: 'put',
+            method: 'post',
             body: JSON.stringify({ nomUtilisateur, Artiste, Titre }),
             headers: {
                 'Content-Type': 'application/json'
