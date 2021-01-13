@@ -143,5 +143,18 @@ app.post('/api/demandes-speciales/ajouter', (requete, reponse) => {
     }
 });
 
+app.delete('/api/demandes-speciales/supprimer/:id', (requete, reponse) => {
+    const id = requete.params.id;
+
+    utiliserDB(async (db) => {
+        var objectId = ObjectID.createFromHexString(id);
+        const resultat = await db.collection('demandes-speciales').deleteOne({ _id: objectId });
+        
+        reponse.status(200).send(`${resultat.deletedCount} demande supprimée`);
+    }, reponse).catch(
+        () => reponse.status(500).send("Erreur : la demande n'a pas été supprimée")
+    );    
+});
+
 
 app.listen(8000, () => console.log("Serveur démarré sur le port 8000"));
