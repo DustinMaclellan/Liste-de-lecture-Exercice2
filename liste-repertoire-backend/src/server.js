@@ -20,6 +20,7 @@ const utiliserDB = async (operations, reponse) => {
     }
 };
 
+// Collection de pieces
 app.get('/api/pieces', (requete, reponse) => {
     utiliserDB(async (db) => {
         const listePieces = await db.collection('pieces').find().toArray();
@@ -105,5 +106,42 @@ app.delete('/api/pieces/supprimer/:id', (requete, reponse) => {
         () => reponse.status(500).send("Erreur : la pièce n'a pas été supprimée")
     );    
 });
+
+
+// Collection de demandes-speciales
+
+app.get('/api/demandes-speciales', (requete, reponse) => {
+    utiliserDB(async (db) => {
+        const listeDemandes = await db.collection('demandes-speciales').find().toArray();
+        reponse.status(200).json(listeDemandes);
+    }, reponse).catch(
+        () => reponse.status(500).send("Erreur lors de la requête")
+    );;
+});
+
+app.post('/api/demandes-speciales/ajouter', (requete, reponse) => {
+    const {titre, artiste, nomClient} = requete.body;
+
+    if (titre !== undefined && artiste !== undefined && nomClient !== undefined) {
+        utiliserDB(async (db) => {
+            await db.collection('demandes-speciales').insertOne({
+                nomClient: nomClient,
+                titre: titre,
+                artiste: artiste,
+            });
+            
+            reponse.status(200).send("Demande ajouté");
+        }, reponse).catch(
+            () => reponse.status(500).send("Erreur : la demande n'a pas été modifiée")
+        );        
+    }
+    else {
+        reponse.status(500).send(`Certains paramètres ne sont pas définis :
+            - nomClient ${nomClient}
+            - titre: ${titre}
+            - artiste: ${artiste}`);
+    }
+});
+
 
 app.listen(8000, () => console.log("Serveur démarré sur le port 8000"));
