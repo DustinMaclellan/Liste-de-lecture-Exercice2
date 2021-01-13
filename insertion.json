@@ -6,5 +6,10 @@
 {
     "titre": "Everybody (Backstreet's Back)",
     "artiste": "Backstreet Boys",
-    "categorie": ["Pop"]
+    "categorie": ["Pop", "90s"]
+},
+{
+    "titre": "Under The Sea",
+    "artiste": "Samuel E. Wright",
+    "categorie": ["Musical", "Disney"]
 }]
