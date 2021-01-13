@@ -15,17 +15,22 @@ function ListeDemandesSpeciales() {
 
         };
         Accessibilite();
-    }, []);
+    }, [demandesSpeciales]);
 
+    async function HandleClick(valeur)
+    {        
+            const resultat = await fetch(`/api/demandes-speciales/supprimer/${valeur}`,{
+            method: 'DELETE',
+            headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+               }                    
+            });
+            const body = await resultat.json();
+            setDemandesSpeciales(body);
 
-    const handleClickSupprimer = async (index) =>
-            {
-                const resultat = await fetch(`/api/demandes-speciales/supprimer/:${index}`,{
-                method: 'DELETE',                    
-                });
-                const body = await resultat.json();
-                setDemandesSpeciales(body);
-            }
+        console.log(valeur);
+    }
 
     return (
         <>
@@ -38,12 +43,13 @@ function ListeDemandesSpeciales() {
                     </tr>
                 </thead>
                 <tbody>
-                    {demandesSpeciales.map((demande) =>
+                    {Object.keys(demandesSpeciales).map((index) =>
                         <tr>
-                            <td>{demande.nomClient}</td>
-                            <td>{demande.titre}</td>
-                            <td>{demande.artiste}</td>
-                            <td><Button className="btn btn-danger float-right mr-1" onClick={handleClickSupprimer}> Supprimer </Button></td>
+                            <td>{demandesSpeciales[index].NomClient}</td>
+                            <td>{demandesSpeciales[index].Artiste}</td>
+                            <td>{demandesSpeciales[index].Titre}</td>
+                            <td>{demandesSpeciales[index]._id}</td>
+                            <td><Button className="btn btn-danger float-right mr-1" onClick={()=> HandleClick(demandesSpeciales[index]._id)}> Supprimer </Button></td>
                         </tr>
                     )}
                 </tbody>

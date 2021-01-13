@@ -155,13 +155,15 @@ app.post("/api/demandes-speciales/ajouter", (requete, reponse) => {
 app.delete("/api/demandes-speciales/supprimer/:id", (requete, reponse) => {
   const id = requete.params.id;
 
+  console.log(id);
+
   utiliserDB(async (db) => {
     var objectId = ObjectID.createFromHexString(id);
     const resultat = await db
       .collection("demandes-speciales")
       .deleteOne({ _id: objectId });
 
-    reponse.status(200).send(`${resultat.deletedCount} demande supprimée`);
+    reponse.status(200);
   }, reponse).catch(() =>
     reponse.status(500).send("Erreur : la demande n'a pas été supprimée")
   );
