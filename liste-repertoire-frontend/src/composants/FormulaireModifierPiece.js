@@ -78,27 +78,30 @@ function FormulaireModifierPiece({ id }) {
           />
         </Form.Group>
 
-        <Form.Label>Catégories</Form.Label>
-        {categories.map((valeur, index) => {
-          return (
-            <Form.Group>
-              <Form.Control
-                type="text"
-                value={valeur}
-                onChange={(event) => handleInputChange(event, index)}
-              />
+        <Form.Group>
+          <Form.Label>Catégories</Form.Label>
+          {categories.map((valeur, index) => {
+            return (
+              <>
+                <Form.Control
+                  type="text"
+                  value={valeur}
+                  onChange={(event) => handleInputChange(event, index)}
+                />
 
-              {categories.length != 1 && (
-                <Button
-                  variant="danger"
-                  onClick={() => handleClickRemove(index)}
-                >
-                  Supprimer
-                </Button>
-              )}
-            </Form.Group>
-          );
-        })}
+                {categories.length !== 1 && (
+                  <Button
+                    variant="danger"
+                    className="btn-sm m-1"
+                    onClick={() => handleClickRemove(index)}
+                  >
+                    Supprimer
+                  </Button>
+                )}
+              </>
+            );
+          })}
+        </Form.Group>
         <Button onClick={handleClickAdd}>Ajouter Une Catégorie</Button>
         <br />
         <br />
