@@ -10,13 +10,13 @@ import { Redirect } from 'react-router-dom';
 function FormulaireAjouterPiece({ id }) {
     const [titre, setTitre] = useState('');
     const [artiste, setArtiste] = useState('');
-    const [categorie, setCategorie] = useState('');
+    const [categories, setCategorie] = useState(['']);
     const [rediriger, setRediriger] = useState(false);
 
     const envoyerFormulaire = async () => {
         await fetch(`/api/pieces/ajouter`, {
             method: 'put',
-            body: JSON.stringify({ titre, artiste, categorie }),
+            body: JSON.stringify({ titre, artiste, categories }),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -28,6 +28,27 @@ function FormulaireAjouterPiece({ id }) {
         if (rediriger === true) {
             return <Redirect to="/admin" />
         }
+    }
+
+    const handleClickRemove = index =>{
+        const list = [...categories];
+        list.splice(index,1);
+        setCategorie(list);
+    }
+
+    const handleClickAdd  = () =>{  
+
+        const list = categories;
+        console.log(list)
+        setCategorie(list=>[...list,'']);
+    }
+
+    const handleInputChange = (e,index) =>{
+        const nom = e.target.value;
+        const list = categories
+        list[index] = nom;
+        console.log(list);
+        setCategorie(list);
     }
     
     return (
@@ -46,11 +67,16 @@ function FormulaireAjouterPiece({ id }) {
                     onChange={(event) => setArtiste(event.target.value)} />
             </Form.Group>
 
+            {categories.map((index,valeur) =>{
+             return(
             <Form.Group>
-                <Form.Label>Catégorie</Form.Label>
-                <Form.Control type="text" value={categorie} 
-                    onChange={(event) => setCategorie(event.target.value)} />
-            </Form.Group>
+                <Form.Label>Catégories</Form.Label>
+                <Form.Control type="text" value={categories[index]} 
+                    onChange={(event) => handleInputChange(event,valeur)} />
+                {categories.length != 1 && <Button className="btn btn-danger"  onClick={() => handleClickRemove(index)}>Supprimer</Button>}       
+            </Form.Group> 
+             )})}
+             <Button onClick={handleClickAdd}>Ajouter </Button>
 
             <Button variant="primary" onClick={envoyerFormulaire} >
                 Ajouter
