@@ -2,6 +2,7 @@ import React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import { Link } from 'react-router-dom';
 
 function BarreNavigation() {
     return (
@@ -17,7 +18,10 @@ function BarreNavigation() {
                     </LinkContainer>
                     <LinkContainer to="/admin">
                         <Nav.Link>Admin</Nav.Link>
-                    </LinkContainer>            
+                    </LinkContainer>  
+                    <LinkContainer to="/demandes-speciales" >
+                        <Nav.Link>Demandes Speciales</Nav.Link>
+                    </LinkContainer>          
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
